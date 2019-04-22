@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="《高性能 javascript》"><meta name="keywords" content="javascript,思维导图"><meta name="author" content="老李,undefined"><meta name="copyright" content="老李"><title>《高性能 javascript》【李永平的博客】</title><link rel="stylesheet" href="/css/fan.css"><link rel="stylesheet" href="/css/thirdparty/jquery.mCustomScrollbar.min.css"><link rel="icon" href="/favicon.ico"><script>var isPassword = '' || false;
+if (isPassword) {
+    if (prompt('请输入文章密码') !== '') {
+        alert('密码错误！');
+        history.back();
+    }
+}</script><script>window.GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+}</script></head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="toggle-sidebar-info button-hover"><span data-toggle="文章目录">站点概览</span></div><div class="sidebar-toc"><div class="sidebar-toc-title">目录</div><div class="sidebar-toc-progress"><span class="progress-notice">您已阅读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc-progress-bar"></div></div><div class="sidebar-toc-content" id="sidebar-toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加载和执行"><span class="toc-number">2.</span> <span class="toc-text">加载和执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据存取"><span class="toc-number">3.</span> <span class="toc-text">数据存取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM-编程"><span class="toc-number">4.</span> <span class="toc-text">DOM 编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#算法和流程控制"><span class="toc-number">5.</span> <span class="toc-text">算法和流程控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串和正则表达式"><span class="toc-number">6.</span> <span class="toc-text">字符串和正则表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快速响应用户界面"><span class="toc-number">7.</span> <span class="toc-text">快速响应用户界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ajax"><span class="toc-number">8.</span> <span class="toc-text">Ajax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编程实践"><span class="toc-number">9.</span> <span class="toc-text">编程实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构建并部署高性能-javascript-应用"><span class="toc-number">10.</span> <span class="toc-text">构建并部署高性能 javascript 应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具"><span class="toc-number">11.</span> <span class="toc-text">工具</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/lyp.jpg"></div><div class="author-info-name">老李</div><div class="author-info-description">前端,李永平,博客</div><div class="links-buttons"><a class="links-button button-hover" href="https://github.com/MemoryNoodles/blog" target="_blank">GitHub<i class="icon-dot bg-color2"></i></a><a class="links-button button-hover" href="mailto:729804002@163.com" target="_blank">E-Mail<i class="icon-dot bg-color7"></i></a><a class="links-button button-hover" href="tencent://message/?uin=729804002&amp;Site=&amp;Menu=yes" target="_blank">QQ<i class="icon-dot bg-color9"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/archives"><span class="pull-top">日志</span><span class="pull-bottom">6</span></a><a class="author-info-articles-tags article-meta" href="/tags"><span class="pull-top">标签</span><span class="pull-bottom">3</span></a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/tags">标签</a><a class="menu-item" href="/categories">分类</a><a class="menu-item" href="/archives">归档</a><a class="menu-item" href="/about">关于</a></nav><div class="right-info"><a class="title-name" href="/">李永平的博客</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><article id="post"><div class="post-header"><div class="title">《高性能 javascript》</div><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 发表于 2019-04-22 | 更新于 2019-04-22</time><!--time.button-hover.post-date #[i.fas.fa-calendar-alt.article-icon(aria-hidden="true")] #[=__('post.modified')] #[=date(page['updated'], config.date_format)]--><div class="button-hover categories"></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/javascript/">javascript</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/思维导图/">思维导图</a></div></div></div><div class="main-content"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本期我来给大家推荐的书是《高性能JavaScript》,在这本书中我们能够了解 javascript 开发过程中的性能瓶颈,如何提升各方面的性能，包括代码的加载、运行、DOM交互、页面生存周期等。同样我们今天还是用思维导图的方式来精读一遍。（思维导图图片可能有点小，记得点开看，你会有所收获）</p>
+<h3 id="加载和执行"><a href="#加载和执行" class="headerlink" title="加载和执行"></a>加载和执行</h3><p><img src="https://user-gold-cdn.xitu.io/2018/8/28/1657fdcc454e6ee1?w=1331&amp;h=666&amp;f=jpeg&amp;s=167715" alt><br>管理浏览器中的 JavaScript 代码是个棘手的问题,因为代码执行阻塞了其他浏览器处理过程,诸如用户 界面绘制。每次遇到<code>&lt;script&gt;</code>标签,页面必须停下来等待代码下载(如果是外部的)并执行,然后再继续处 理页面其他部分。但是,有几种方法可以减少 JavaScript 对性能的影响:</p>
+<ol>
+<li>将所有<code>&lt;script&gt;</code>标签放置在页面的底部,紧靠 body 关闭标签<code>&lt;/body&gt;</code>的上方。此法可以保证页面在脚本 运行之前完成解析。</li>
+<li>将脚本成组打包。页面的<code>&lt;script&gt;</code>标签越少,页面的加载速度就越快,响应也更加迅速。不论外部脚本 文件还是内联代码都是如此。</li>
+</ol>
+<p>有几种方法可以使用非阻塞方式下载 JavaScript:</p>
+<ul>
+<li>为<code>&lt;script&gt;</code>标签添加 defer 属性(只适用于 Internet Explorer 和 Firefox 3.5 以上版本)</li>
+<li>动态创建<code>&lt;script&gt;</code>元素,用它下载并执行代码</li>
+<li>用 XHR 对象下载代码,并注入到页面中</li>
+</ul>
+<p>通过使用上述策略,你可以极大提高那些大量使用 JavaScript 代码的网页应用的实际性能。</p>
+<h3 id="数据存取"><a href="#数据存取" class="headerlink" title="数据存取"></a>数据存取</h3><p><img src="https://user-gold-cdn.xitu.io/2018/8/28/1657fdcfe6225580?w=1406&amp;h=1141&amp;f=jpeg&amp;s=250469" alt></p>
+<p>在 JavaScript 中,数据存储位置可以对代码整体性能产生重要影响。有四种数据访问类型:直接量,变 量,数组项,对象成员。它们有不同的性能考虑。</p>
+<p>直接量和局部变量访问速度非常快,数组项和对象成员需要更长时间。局部变量比域外变量快,因为它位于作用域链的第一个对象中。变量在作用域链中的位置越深,访问所需 的时间就越长。全局变量总是最慢的,因为它们总是位于作用域链的最后一环。避免使用 with 表达式,因为它改变了运行期上下文的作用域链。而且应当小心对待 try-catch 表达式的 catch 子句,因为它具有同样效果。嵌套对象成员会造成重大性能影响,尽量少用。</p>
+<p>一个属性或方法在原形链中的位置越深,访问它的速度就越慢。一般来说,你可以通过这种方法提高 JavaScript 代码的性能:将经常使用的对象成员,数组项,和域外变 量存入局部变量中。然后,访问局部变量的速度会快于那些原始变量。通过使用这些策略,你可以极大地提高那些需要大量 JavaScript 代码的网页应用的实际性能。</p>
+<h3 id="DOM-编程"><a href="#DOM-编程" class="headerlink" title="DOM 编程"></a>DOM 编程</h3><p><img src="https://user-gold-cdn.xitu.io/2018/8/28/1657fdd2b6dc3942?w=1401&amp;h=1776&amp;f=jpeg&amp;s=336802" alt><br>DOM 访问和操作是现代网页应用中很重要的一部分。但每次你通过桥梁从 ECMAScript 岛到达 DOM 岛 时,都会被收取“过桥费”。为减少 DOM 编程中的性能损失,请牢记以下几点:</p>
+<p>最小化 DOM 访问,在 JavaScript 端做尽可能多的事情。在反复访问的地方使用局部变量存放 DOM 引用.小心地处理 HTML 集合,因为他们表现出“存在性”,总是对底层文档重新查询。将集合的 length 属性缓 存到一个变量中,在迭代中使用这个变量。如果经常操作这个集合,可以将集合拷贝到数组中。</p>
+<p>如果可能的话,使用速度更快的 API,诸如 querySelectorAll()和 firstElementChild。注意重绘和重排版;批量修改风格,离线操作 DOM 树,缓存并减少对布局信息的访问。动画中使用绝对坐标,使用拖放代理。使用事件托管技术最小化事件句柄数量。</p>
+<h3 id="算法和流程控制"><a href="#算法和流程控制" class="headerlink" title="算法和流程控制"></a>算法和流程控制</h3><p><img src="https://user-gold-cdn.xitu.io/2018/8/28/1657fdd56a2ebbda?w=1387&amp;h=1352&amp;f=jpeg&amp;s=276447" alt><br>正如其他编程语言,代码的写法和算法选用影响 JavaScript 的运行时间。与其他编程语言不同的是, JavaScript 可用资源有限,所以优化技术更为重要。</p>
+<p>for,while,do-while 循环的性能特性相似,谁也不比谁更快或更慢。除非你要迭代遍历一个属性未知的对象,否则不要使用 for-in 循环。改善循环性能的最好办法是减少每次迭代中的运算量,并减少循环迭代次数。</p>
+<p>一般来说,switch 总是比 if-else 更快,但并不总是最好的解决方法。当判断条件较多时,查表法比 if-else 或者 switch 更快。</p>
+<p>浏览器的调用栈尺寸限制了递归算法在 JavaScript 中的应用;栈溢出错误导致其他代码也不能正常执行。如果你遇到一个栈溢出错误,将方法修改为一个迭代算法或者使用制表法可以避免重复工作。</p>
+<p>运行的代码总量越大,使用这些策略所带来的性能提升就越明显。</p>
+<h3 id="字符串和正则表达式"><a href="#字符串和正则表达式" class="headerlink" title="字符串和正则表达式"></a>字符串和正则表达式</h3><p><img src="https://user-gold-cdn.xitu.io/2018/8/28/1657fdd820a10240?w=1409&amp;h=1707&amp;f=jpeg&amp;s=359339" alt><br>密集的字符串操作和粗浅地编写正则表达式可能是主要性能障碍,但本章中的建议可帮助您避免常见缺陷。当连接数量巨大或尺寸巨大的字符串时,数组联合是 IE7 和它的早期版本上唯一具有合理性能的方法。如果你不关心 IE7 和它的早期版本,数组联合是连接字符串最慢的方法之一。使用简单的+和+=取而代之, 可避免(产生)不必要的中间字符串。</p>
+<p>回溯既是正则表达式匹配功能基本的组成部分,又是正则表达式影响效率的常见原因。回溯失控发生在正则表达式本应很快发现匹配的地方,因为某些特殊的匹配字符串动作,导致运行缓慢 甚至浏览器崩溃。避免此问题的技术包括:使相邻字元互斥,避免嵌套量词对一个字符串的相同部分多次 匹配,通过重复利用前瞻操作的原子特性去除不必要的回溯。</p>
+<p>提高正则表达式效率的各种技术手段,帮助正则表达式更快地找到匹配,以及在非匹配位置上花费更少 时间(见《更多提高正则表达式效率的方法》)。正则表达式并不总是完成工作的最佳工具,尤其当你只是搜索一个文本字符串时。</p>
+<p>虽然有很多方法来修整一个字符串,使用两个简单的正则表达式(一个用于去除头部空格,另一个用于 去除尾部空格)提供了一个简洁、跨浏览器的方法,适用于不同内容和长度的字符串。从字符串末尾开始 循环查找第一个非空格字符,或者在一个混合应用中将此技术与正则表达式结合起来,提供了一个很好的 替代方案,它很少受到字符串整体长度的影响。</p>
+<h3 id="快速响应用户界面"><a href="#快速响应用户界面" class="headerlink" title="快速响应用户界面"></a>快速响应用户界面</h3><p><img src="https://user-gold-cdn.xitu.io/2018/8/23/16564dcd70084551?w=1446&amp;h=740&amp;f=jpeg&amp;s=159046" alt><br>JavaScript 和用户界面更新在同一个进程内运行,同一时刻只有其中一个可以运行。这意味着当 JavaScript 代码正在运行时,用户界面不能响应输入,反之亦然。有效地管理 UI 线程就是要确保 JavaScript 不能运行 太长时间,以免影响用户体验。最后,请牢记如下几点:</p>
+<ol>
+<li>JavaScript 运行时间不应该超过 100 毫秒。过长的运行时间导致 UI 更新出现可察觉的延迟,从而对整体 用户体验产生负面影响。</li>
+<li>JavaScript 运行期间,浏览器响应用户交互的行为存在差异。无论如何,JavaScript 长时间运行将导致用 户体验混乱和脱节。</li>
+<li>定时器可用于安排代码推迟执行,它使得你可以将长运行脚本分解成一系列较小的任务。</li>
+</ol>
+<p>网页工人线程是新式浏览器才支持的特性,它允许你在 UI 线程之外运行 JavaScript 代码而避免锁定 UI。网页应用程序越复杂,积极主动地管理 UI 线程就越显得重要。没有什么 JavaScript 代码可以重要到允 许影响用户体验的程度。</p>
+<h3 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h3><p><img src="https://user-gold-cdn.xitu.io/2018/8/28/1657fddbf1ad2b4f?w=1410&amp;h=1709&amp;f=jpeg&amp;s=393143" alt><br>高性能 Ajax 包括:知道你项目的具体需求,选择正确的数据格式和与之相配的传输技术。</p>
+<p>作为数据格式,纯文本和 HTML 是高度限制的,但它们可节省客户端的 CPU 周期。XML 被广泛应用 普遍支持,但它非常冗长且解析缓慢。JSON 是轻量级的,解析迅速(作为本地代码而不是字符串),交 互性与 XML 相当。字符分隔的自定义格式非常轻量,在大量数据集解析时速度最快,但需要编写额外的 程序在服务器端构造格式,并在客户端解析。</p>
+<p>当从页面域请求数据时,XHR 提供最完善的控制和灵活性,尽管它将所有传入数据视为一个字符串, 这有可能降低解析速度。另一方面,动态脚本标签插入技术允许跨域请求和本地运行 JavaScript 和 JSON, 虽然它的接口不够安全,而且不能读取信息头或响应报文代码。多部分 XHR 可减少请求的数量,可在一次响应中处理不同的文件类型,尽管它不能缓存收到的响应报文。当发送数据时,图像灯标是最简单和最 有效的方法。XHR 也可用 POST 方法发送大量数据。</p>
+<p>除这些格式和传输技术之外,还有一些准则有助于进一步提高 Ajax 的速度:</p>
+<ol>
+<li>减少请求数量,可通过 JavaScript 和 CSS 文件打包,或者使用 MXHR。</li>
+<li>缩短页面的加载时间,在页面其它内容加载之后,使用 Ajax 获取少量重要文件。</li>
+<li>确保代码错误不要直接显示给用户,并在服务器端处理错误。</li>
+<li>学会何时使用一个健壮的 Ajax 库,何时编写自己的底层 Ajax 代码。</li>
+</ol>
+<p>Ajax 是提升你网站潜在性能之最大的改进区域之一,因为很多网站大量使用异步请求,又因为它提供 了许多不相关问题的解决方案,这些问题诸如,需要加载太多资源。对 XHR 的创造性应用是如此的与众 不同,它不是呆滞不友好的界面,而是响应迅速且高效的代名词;它不会引起用户的憎恨,谁见了它都会 爱上它。</p>
+<h3 id="编程实践"><a href="#编程实践" class="headerlink" title="编程实践"></a>编程实践</h3><p><img src="https://user-gold-cdn.xitu.io/2018/8/23/16564dd6b39a18cd?w=1436&amp;h=686&amp;f=jpeg&amp;s=145779" alt></p>
+<p>JavaScript 提出了一些独特的性能挑战,关系到你组织代码的方法。网页应用变得越来越高级,包含的 JavaScript 代码越来越多,出现了一些模式和反模式。请牢记以下编程经验:</p>
+<ol>
+<li>通过避免使用 eval_r()和 Function()构造器避免二次评估。此外,给 setTimeout()和 setInterval()传递函数参 数而不是字符串参数。</li>
+<li>创建新对象和数组时使用对象直接量和数组直接量。它们比非直接量形式创建和初始化更快。</li>
+<li>避免重复进行相同工作。当需要检测浏览器时,使用延迟加载或条件预加载。</li>
+<li>当执行数学远算时,考虑使用位操作,它直接在数字底层进行操作。</li>
+<li>原生方法总是比 JavaScript 写的东西要快。尽量使用原生方法。</li>
+</ol>
+<h3 id="构建并部署高性能-javascript-应用"><a href="#构建并部署高性能-javascript-应用" class="headerlink" title="构建并部署高性能 javascript 应用"></a>构建并部署高性能 javascript 应用</h3><p>开发和部署过程对基于 JavaScript 的应用程序可以产生巨大影响,最重要的几个步骤如下:</p>
+<ol>
+<li>合并 JavaScript 文件,减少 HTTP 请求的数量</li>
+<li>使用 YUI 压缩器紧凑处理 JavaScript 文件</li>
+<li>以压缩形式提供 JavaScript 文件(gzip 编码)</li>
+<li>通过设置 HTTP 响应报文头使 JavaScript 文件可缓存,通过向文件名附加时间戳解决缓存问题</li>
+<li>使用内容传递网络(CDN)提供 JavaScript 文件,CDN 不仅可以提高性能,它还可以为你管理压缩和缓 存</li>
+</ol>
+<p>所有这些步骤应当自动完成,不论是使用公开的开发工具诸如 Apache Ant,还是使用自定义的开发工具 以实现特定需求。如果你使这些开发工具为你服务,你可以极大改善那些大量使用 JavaScript 代码的网页 应用或网站的性能。</p>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>当网页或应用程序变慢时,分析网上传来的资源,分析脚本的运行性能,使你能够集中精力在那些需要 努力优化的地方。使用网络分析器找出加载脚本和其它页面资源的瓶颈所在,这有助于决定哪些脚本需要延迟加载,或者 进行进一步分析。传统的智慧告诉我们应尽量减少 HTTP 请求的数量,尽量延迟加载脚本以使页面渲染速度更快,向用户 提供更好的整体体验。使用性能分析器找出脚本运行时速度慢的部分,检查每个函数所花费的时间,以及函数被调用的次数, 通过调用栈自身提供的一些线索来找出哪些地方应当努力优化。虽然花费时间和调用次数通常是数据中最有价值的点,还是应当仔细察看函数的调用过程,可能发现其 它优化方法。这些工具在那些现代代码所要运行的编程环境中不再神秘。在开始优化工作之前使用它们,确保开发时 间用在解决问题的刀刃上。</p>
+</div><div class="post-copyright"><div class="post-copyright-author"><span class="post-copyright-meta">本文作者: </span><span class="post-copyright-info"><a href="mailto:undefined">老李</a></span></div><div class="post-copyright-type"><span class="post-copyright-meta">本文链接: </span><span class="post-copyright-info"><a href="https://MemoryNoodles.github.io/blog/2019/04/22/efficiency-javascript/">https://MemoryNoodles.github.io/blog/2019/04/22/efficiency-javascript/</a></span></div><div class="post-copyright-notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://MemoryNoodles.github.io/blog">李永平的博客</a>！</span></div></div></article><div id="pagination"><div class="prev-post pull-left"><span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span><a href="/2019/04/22/u-not-know-javascript1/"><i class="fas fa-angle-left">&nbsp;</i><span>你不知道的javascript》上卷</span></a></div><div class="next-post pull-right"><span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span><a href="/2019/04/22/puling-node/"><span>深入浅出Node.js》</span><span>&nbsp;</span><i class="fas fa-angle-right"></i></a></div></div><!--div!= paginator()--></div></div><div class="button-hover" id="return-top"><i class="fas fa-arrow-up" aria-hidden="true"></i></div><footer><div id="footer"><div class="button-hover" id="side-button"><i class="fas fa-arrow-right"></i></div><div class="right-content"><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fas fa-file-o"></i></span><span id="busuanzi_value_page_pv"></span><span></span></div><div class="copyright">&copy;2018 ～ 2019 By 老李</div></div></div></footer></div><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery-3.3.1.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/velocity.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery.mCustomScrollbar.concat.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/fan.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/canvas_bg.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/utils.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/scroll.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/sidebar.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/copy.js"></script><!--script(src=url)--></body></html>

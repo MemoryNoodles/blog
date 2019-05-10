@@ -1,0 +1,778 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="React的API,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="为了实现分离业务逻辑代码，实现组件内部相关业务逻辑的复用，在 React 的迭代中针对类组件中的代码复用依次发布了 Mixin、HOC、Render props 等几个方案。此外，针对函数组件，在 React v16.7.0-alpha 中提出了 hooks 的概念，在本身无状态的函数组件，引入独立的状态空间，也就是说在函数组件中，也可以引入类组件中的 state 和组件生命周期，使得函数组件变得">
+<meta name="keywords" content="React的API">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Win10和MAC系统通过VMware共享文件夹">
+<meta property="og:url" content="https://MemoryNoodles.github.io/blog/2019/05/06/React的HOC/index.html">
+<meta property="og:site_name" content="李永平的博客">
+<meta property="og:description" content="为了实现分离业务逻辑代码，实现组件内部相关业务逻辑的复用，在 React 的迭代中针对类组件中的代码复用依次发布了 Mixin、HOC、Render props 等几个方案。此外，针对函数组件，在 React v16.7.0-alpha 中提出了 hooks 的概念，在本身无状态的函数组件，引入独立的状态空间，也就是说在函数组件中，也可以引入类组件中的 state 和组件生命周期，使得函数组件变得">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/fyuanfen/note/raw/master/images/react/hoc1.png">
+<meta property="og:image" content="https://github.com/fyuanfen/note/raw/master/images/react/hoc2.png">
+<meta property="og:updated_time" content="2019-05-09T01:09:25.804Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Win10和MAC系统通过VMware共享文件夹">
+<meta name="twitter:description" content="为了实现分离业务逻辑代码，实现组件内部相关业务逻辑的复用，在 React 的迭代中针对类组件中的代码复用依次发布了 Mixin、HOC、Render props 等几个方案。此外，针对函数组件，在 React v16.7.0-alpha 中提出了 hooks 的概念，在本身无状态的函数组件，引入独立的状态空间，也就是说在函数组件中，也可以引入类组件中的 state 和组件生命周期，使得函数组件变得">
+<meta name="twitter:image" content="https://github.com/fyuanfen/note/raw/master/images/react/hoc1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://MemoryNoodles.github.io/blog/2019/05/06/React的HOC/">
+
+
+
+
+
+  <title> Win10和MAC系统通过VMware共享文件夹 | 李永平的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">李永平的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">你今天比昨天更博学了吗？</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://MemoryNoodles.github.io/blog/2019/05/06/React的HOC/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="老李">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/images/lyp.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="李永平的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="李永平的博客" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Win10和MAC系统通过VMware共享文件夹
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-06T19:55:31+08:00">
+                2019-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2019/05/06/React的HOC/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/06/React的HOC/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>为了实现分离业务逻辑代码，实现组件内部相关业务逻辑的复用，在 React 的迭代中针对类组件中的代码复用依次发布了 Mixin、HOC、Render props 等几个方案。此外，针对函数组件，在 React v16.7.0-alpha 中提出了 hooks 的概念，在本身无状态的函数组件，引入独立的状态空间，也就是说在函数组件中，也可以引入类组件中的 state 和组件生命周期，使得函数组件变得丰富多彩起来，此外，hooks 也保证了逻辑代码的复用性和独立性。<br>   本文从针对类组件的复用解决方案开始说起，先后介绍了从 Mixin、HOC 到 Render props 的演进，最后介绍了 React v16.7.0-alpha 中的 hooks 以及自定义一个 hooks</p>
+<ul>
+<li>类组件复用：HOC, Render Props</li>
+<li>函数组件复用：Hooks</li>
+</ul>
+<h1 id="高阶组件-HOC"><a href="#高阶组件-HOC" class="headerlink" title="高阶组件(HOC)"></a>高阶组件(HOC)</h1><p>装饰者(<code>decorator</code>)模式能够在不改变对象自身的基础上，在程序运行期间给对像动态的添加职责。与继承相比，装饰者是一种更轻便灵活的做法。</p>
+<p>高阶组件可以看作 React 对装饰模式的一种实现，高阶组件就是一个函数，且该函数接受一个组件作为参数，并返回一个新的组件。</p>
+<blockquote>
+<p>高阶组件（HOC）是 React 中的高级技术，用来重用组件逻辑。但高阶组件本身并不是 React API。它只是一种模式，这种模式是由 React 自身的组合性质必然产生的。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> visible(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      const &#123; visible, ...props &#125; = this.props;</span><br><span class="line">      <span class="keyword">if</span> (visible === <span class="literal">false</span>) <span class="built_in">return</span> null;</span><br><span class="line">      <span class="built_in">return</span> &lt;WrappedComponent &#123;...props&#125; /&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码就是一个 <code>HOC</code> 的简单应用，函数接收一个组件作为参数，并返回一个新组件，新组建可以接收一个 <code>visible props</code>，根据 <code>visible</code> 的值来判断是否渲染 Visible。</p>
+<p>下面我们从以下几方面来具体探索 <code>HOC</code>。<br><img src="https://github.com/fyuanfen/note/raw/master/images/react/hoc1.png" alt></p>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式:"></a>实现方式:</h2><h3 id="属性代理-Props-Proxy"><a href="#属性代理-Props-Proxy" class="headerlink" title="属性代理(Props Proxy)"></a>属性代理(Props Proxy)</h3><p>函数返回一个我们自己定义的组件，然后在 <code>render</code> 中返回要包裹的组件，这样我们就可以代理所有传入的 <code>props</code>，并且决定如何渲染，实际上 ，这种方式生成的高阶组件就是原组件的父组件，上面的函数 <code>visible</code> 就是一个 HOC 属性代理的实现方式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> proxyHOC(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      <span class="built_in">return</span> &lt;WrappedComponent &#123;...this.props&#125; /&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对比原生组件增强的项：</p>
+<ul>
+<li>可操作所有传入的 <code>props</code></li>
+<li>可操作组件的生命周期</li>
+<li>可操作组件的 <code>static</code> 方法</li>
+<li>获取 <code>refs</code></li>
+</ul>
+<h3 id="反向继承-Inheritance-Inversion"><a href="#反向继承-Inheritance-Inversion" class="headerlink" title="反向继承(Inheritance Inversion)"></a>反向继承(Inheritance Inversion)</h3><p>返回一个组件，继承原组件，在 <code>render</code> 中调用原组件的 <code>render</code>。由于继承了原组件，能通过 <code>this</code> 访问到原组件的生命周期、<code>props</code>、<code>state</code>、<code>render</code> 等，相比属性代理它能操作更多的属性。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> inheritHOC(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends WrappedComponent &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      <span class="built_in">return</span> super.render();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对比原生组件增强的项：</p>
+<ul>
+<li>可操作所有传入的 props</li>
+<li>可操作组件的生命周期</li>
+<li>可操作组件的 <code>static</code> 方法</li>
+<li>获取 <code>refs</code></li>
+<li>可操作 <code>state</code></li>
+<li>可以渲染劫持</li>
+</ul>
+<h2 id="HOC-可以实现什么功能"><a href="#HOC-可以实现什么功能" class="headerlink" title="HOC 可以实现什么功能"></a>HOC 可以实现什么功能</h2><h3 id="组合渲染"><a href="#组合渲染" class="headerlink" title="组合渲染"></a>组合渲染</h3><p>可使用任何其他组件和原组件进行组合渲染，达到样式、布局复用等效果。</p>
+<blockquote>
+<p>通过属性代理实现</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> stylHOC(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      <span class="built_in">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &lt;div className=<span class="string">"title"</span>&gt;&#123;this.props.title&#125;&lt;/div&gt;</span><br><span class="line">          &lt;WrappedComponent &#123;...this.props&#125; /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>通过反向继承实现</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> styleHOC(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends WrappedComponent &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      <span class="built_in">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &lt;div className=<span class="string">"title"</span>&gt;&#123;this.props.title&#125;&lt;/div&gt;</span><br><span class="line">          &#123;super.render()&#125;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="条件渲染"><a href="#条件渲染" class="headerlink" title="条件渲染"></a>条件渲染</h3><p>根据特定的属性决定原组件是否渲染</p>
+<blockquote>
+<p>通过属性代理实现</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> visibleHOC(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      <span class="keyword">if</span> (this.props.visible === <span class="literal">false</span>) <span class="built_in">return</span> null;</span><br><span class="line">      <span class="built_in">return</span> &lt;WrappedComponent &#123;...props&#125; /&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>通过反向继承实现</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> visibleHOC(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends WrappedComponent &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      <span class="keyword">if</span> (this.props.visible === <span class="literal">false</span>) &#123;</span><br><span class="line">        <span class="built_in">return</span> null;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">return</span> super.render();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="操作-props"><a href="#操作-props" class="headerlink" title="操作 props"></a>操作 props</h3><p>可以对传入组件的 props 进行增加、修改、删除或者根据特定的 props 进行特殊的操作。</p>
+<blockquote>
+<p>通过属性代理实现</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> proxyHOC(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      const newProps = &#123;</span><br><span class="line">        ...this.props,</span><br><span class="line">        user: <span class="string">"aa"</span></span><br><span class="line">      &#125;;</span><br><span class="line">      <span class="built_in">return</span> &lt;WrappedComponent &#123;...newProps&#125; /&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="获取-refs"><a href="#获取-refs" class="headerlink" title="获取 refs"></a>获取 refs</h3><p>高阶组件中可获取原组件的 <code>ref</code>，通过 <code>ref</code> 获取组件实例，如下面的代码，当程序初始化完成后调用原组件的 <code>log</code> 方法。(不知道 refs 怎么用，请 👇<a href="https://react.docschina.org/docs/refs-and-the-dom.html" target="_blank" rel="noopener">Refs &amp; DOM</a>)</p>
+<blockquote>
+<p>通过属性代理实现</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> refHOC(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">componentDidMount</span></span>() &#123;</span><br><span class="line">      this.wrapperRef.log();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      <span class="built_in">return</span> (</span><br><span class="line">        &lt;WrappedComponent</span><br><span class="line">          &#123;...this.props&#125;</span><br><span class="line">          ref=&#123;ref =&gt; &#123;</span><br><span class="line">            this.wrapperRef = ref;</span><br><span class="line">          &#125;&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里注意：调用高阶组件的时候并不能获取到原组件的真实 <code>ref</code>，需要手动进行传递，具体请看<a href="https://reactjs.org/docs/forwarding-refs.html" target="_blank" rel="noopener">传递 refs</a></p>
+<h3 id="状态管理"><a href="#状态管理" class="headerlink" title="状态管理"></a>状态管理</h3><p>将原组件的状态提取到 <code>HOC</code> 中进行管理，如下面的代码，我们将 <code>Input</code> 的 <code>value</code> 提取到 <code>HOC</code> 中进行管理，使它变成受控组件，同时不影响它使用 <code>onChange</code> 方法进行一些其他操作。基于这种方式，我们可以实现一个简单的双向绑定。</p>
+<blockquote>
+<p>通过属性代理实现</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> proxyHoc(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends Component &#123;</span><br><span class="line">    constructor(props) &#123;</span><br><span class="line">      super(props);</span><br><span class="line">      this.state = &#123; value: <span class="string">""</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    onChange = event =&gt; &#123;</span><br><span class="line">      const &#123; onChange &#125; = this.props;</span><br><span class="line">      this.setState(</span><br><span class="line">        &#123;</span><br><span class="line">          value: event.target.value</span><br><span class="line">        &#125;,</span><br><span class="line">        () =&gt; &#123;</span><br><span class="line">          <span class="keyword">if</span> (typeof onChange === <span class="string">"function"</span>) &#123;</span><br><span class="line">            onChange(event);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      );</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      const newProps = &#123;</span><br><span class="line">        value: this.state.value,</span><br><span class="line">        onChange: this.onChange</span><br><span class="line">      &#125;;</span><br><span class="line">      <span class="built_in">return</span> &lt;WrappedComponent &#123;...this.props&#125; &#123;...newProps&#125; /&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class HOC extends Component &#123;</span><br><span class="line">  <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> &lt;input &#123;...this.props&#125; /&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default proxyHoc(HOC);</span><br></pre></td></tr></table></figure>
+<h3 id="操作-state"><a href="#操作-state" class="headerlink" title="操作 state"></a>操作 state</h3><p>上面的例子通过属性代理利用 <code>HOC</code> 的 <code>state</code> 对原组件进行了一定的增强，但并不能直接控制原组件的 <code>state</code>，而通过反向继承，我们可以直接操作原组件的 <code>state</code>。但是并不推荐直接修改或添加原组件的 <code>state</code>，因为这样有可能和组件内部的操作构成冲突。</p>
+<blockquote>
+<p>通过反向继承实现</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> debugHOC(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends WrappedComponent &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      console.log(<span class="string">"props"</span>, this.props);</span><br><span class="line">      console.log(<span class="string">"state"</span>, this.state);</span><br><span class="line">      <span class="built_in">return</span> &lt;div className=<span class="string">"debuging"</span>&gt;&#123;super.render()&#125;&lt;/div&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的 <code>HOC</code> 在 <code>render</code> 中将 <code>props</code> 和 <code>state</code> 打印出来，可以用作调试阶段，当然你可以在里面写更多的调试代码。想象一下，只需要在我们想要调试的组件上加上@debug 就可以对该组件进行调试，而不需要在每次调试的时候写很多冗余代码。</p>
+<h3 id="渲染劫持"><a href="#渲染劫持" class="headerlink" title="渲染劫持"></a>渲染劫持</h3><p>实际上，上面的组合渲染和条件渲染都是渲染劫持的一种，通过反向继承，不仅可以实现以上两点，还可直接增强由原组件 <code>render</code> 函数产生的 <code>React</code> 元素。</p>
+<blockquote>
+<p>通过反向继承实现</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> hijackHOC(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends WrappedComponent &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      const tree = super.render();</span><br><span class="line">      <span class="built_in">let</span> newProps = &#123;&#125;;</span><br><span class="line">      <span class="keyword">if</span> (tree &amp;&amp; tree.type === <span class="string">"input"</span>) &#123;</span><br><span class="line">        newProps = &#123; value: <span class="string">"渲染被劫持了"</span> &#125;;</span><br><span class="line">      &#125;</span><br><span class="line">      const props = Object.assign(&#123;&#125;, tree.props, newProps);</span><br><span class="line">      const newTree = React.cloneElement(tree, props, tree.props.children);</span><br><span class="line">      <span class="built_in">return</span> newTree;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意上面的说明我用的是<strong>增强</strong>而不是<strong>更改</strong>。<code>render</code>函数内实际上是调用<code>React.creatElemen</code>t 产生的<code>React</code>元素：<br>虽然我们能拿到它，但是我们不能直接修改它里面的属性，我们可以借助 <code>cloneElement</code> 方法来在原组件的基础上增强一个新组件：</p>
+<p><code>React.cloneElement()</code>克隆并返回一个新的 <code>React</code> 元素，使用 <code>element</code> 作为起点。生成的元素将会拥有原始元素 <code>props</code> 与新 <code>props</code> 的浅合并。新的子级会替换现有的子级。来自原始元素的 <code>key</code> 和 <code>ref</code> 将会保留。</p>
+<p><code>React.cloneElement()</code>几乎相当于：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">element.type</span> &#123;<span class="attr">...element.props</span>&#125; &#123;<span class="attr">...props</span>&#125;&gt;</span>&#123;children&#125;<span class="tag">&lt;/<span class="name">element.type</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="如何使用-HOC"><a href="#如何使用-HOC" class="headerlink" title="如何使用 HOC"></a>如何使用 HOC</h2><p>上面的示例代码都写的是如何声明一个 <code>HOC</code>，<code>HOC</code> 实际上是一个函数，所以我们将要增强的组件作为参数调用 <code>HOC</code> 函数，得到增强后的组件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class myComponent extends Component &#123;</span><br><span class="line">  <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> &lt;span&gt;原组件&lt;/span&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">export</span> default inheritHOC(myComponent);</span><br></pre></td></tr></table></figure>
+<h3 id="compose"><a href="#compose" class="headerlink" title="compose"></a>compose</h3><p>在实际应用中，一个组件可能被多个 <code>HOC</code> 增强，我们使用的是被所有的 <code>HOC</code> 增强后的组件<br>假设现在我们有 <code>logger</code>，<code>visible</code>，<code>style</code> 等多个 <code>HOC</code>，现在要同时增强一个 <code>Input</code> 组件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logger(visible(style(Input)));</span><br></pre></td></tr></table></figure>
+<p>这种代码非常的难以阅读，我们可以手动封装一个简单的函数组合工具，将写法改写如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const compose = (...fns) =&gt; fns.reduce((f, g) =&gt; (...args) =&gt; g(f(...args)));</span><br><span class="line"></span><br><span class="line">compose(</span><br><span class="line">  logger,</span><br><span class="line">  visible,</span><br><span class="line">  style</span><br><span class="line">)(Input);</span><br></pre></td></tr></table></figure>
+<p><code>compose</code> 函数返回一个所有函数组合后的函数，<code>compose(f, g, h) 和 (...args) =&gt; f(g(h(...args)))</code>是一样的。<br>很多第三方库都提供了类似 <code>compose</code> 的函数，例如 <code>lodash.flowRight</code>，<code>Redux</code> 提供的 <code>applyMiddleware</code> 函数等。具体原理可参考<a href="https://github.com/fyuanfen/note/blob/master/article/React/React%E6%B7%B1%E5%85%A5%E4%B9%8BHOC,%20RenderProps%E7%B1%BB%E7%BB%84%E4%BB%B6%E5%A4%8D%E7%94%A8.md" target="_blank" rel="noopener">React 深入之 HOC, RenderProps 类组件复用.md</a></p>
+<h3 id="Decorators"><a href="#Decorators" class="headerlink" title="Decorators"></a>Decorators</h3><p>我们还可以借助 <code>ES7</code> 为我们提供的 <code>Decorators</code> 来让我们的写法变的更加优雅：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@logger</span><br><span class="line">@visible</span><br><span class="line">@style</span><br><span class="line">class Input extends Component &#123;</span><br><span class="line">// ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Decorators</code> 是 <code>ES7</code> 的一个提案，还没有被标准化，但目前 <code>Babel</code> 转码器已经支持，我们需要提前配置 <code>babel-plugin-transform-decorators-legacy</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"plugins"</span>: [<span class="string">"transform-decorators-legacy"</span>]</span><br></pre></td></tr></table></figure>
+<p>还可以结合上面的 <code>compose</code> 函数使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const hoc = compose(</span><br><span class="line">  logger,</span><br><span class="line">  visible,</span><br><span class="line">  style</span><br><span class="line">);</span><br><span class="line">@hoc</span><br><span class="line">class Input extends Component &#123;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="HOC-的实际应用"><a href="#HOC-的实际应用" class="headerlink" title="HOC 的实际应用"></a>HOC 的实际应用</h2><p>下面是一些我在生产环境中实际对 <code>HOC</code> 的实际应用场景，由于文章篇幅原因，代码经过很多简化，如有问题欢迎在评论区指出：</p>
+<h3 id="日志打点"><a href="#日志打点" class="headerlink" title="日志打点"></a>日志打点</h3><p>实际上这属于一类最常见的应用，多个组件拥有类似的逻辑，我们要对重复的逻辑进行复用，<br>官方文档中 <code>CommentList</code> 的示例也是解决了代码复用问题，写的很详细，有兴趣可以 👇 <a href="https://react.docschina.org/docs/higher-order-components.html#%E4%BD%BF%E7%94%A8%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6%EF%BC%88hoc%EF%BC%89%E8%A7%A3%E5%86%B3%E6%A8%AA%E5%88%87%E5%85%B3%E6%B3%A8%E7%82%B9" target="_blank" rel="noopener">使用高阶组件（HOC）解决横切关注点</a>。<br>某些页面需要记录用户行为，性能指标等等，通过高阶组件做这些事情可以省去很多重复代码。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> logHoc(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">componentWillMount</span></span>() &#123;</span><br><span class="line">      this.start = Date.now();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">componentDidMount</span></span>() &#123;</span><br><span class="line">      this.end = Date.now();</span><br><span class="line">      console.log(</span><br><span class="line">        `<span class="variable">$&#123;WrappedComponent.dispalyName&#125;</span> 渲染时间：<span class="variable">$&#123;this.end - this.start&#125;</span> ms`</span><br><span class="line">      );</span><br><span class="line">      console.log(`<span class="variable">$&#123;user&#125;</span>进入<span class="variable">$&#123;WrappedComponent.dispalyName&#125;</span>`);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">componentWillUnmount</span></span>() &#123;</span><br><span class="line">      console.log(`<span class="variable">$&#123;user&#125;</span>退出<span class="variable">$&#123;WrappedComponent.dispalyName&#125;</span>`);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      <span class="built_in">return</span> &lt;WrappedComponent &#123;...this.props&#125; /&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="可用、权限控制"><a href="#可用、权限控制" class="headerlink" title="可用、权限控制"></a>可用、权限控制</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> auth(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      const &#123; visible, auth, display = null, ...props &#125; = this.props;</span><br><span class="line">      <span class="keyword">if</span> (visible === <span class="literal">false</span> || (auth &amp;&amp; authList.indexOf(auth) === -1)) &#123;</span><br><span class="line">        <span class="built_in">return</span> display;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">return</span> &lt;WrappedComponent &#123;...props&#125; /&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>authList</code> 是我们在进入程序时向后端请求的所有权限列表，当组件所需要的权限不列表中，或者设置的<br><code>visible</code> 是 <code>false</code>，我们将其显示为传入的组件样式，或者 null。我们可以将任何需要进行权限校验的组件应用 <code>HOC</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@auth</span><br><span class="line"> class Input extends Component &#123;  ...  &#125;</span><br><span class="line"> @auth</span><br><span class="line"> class Button extends Component &#123;  ...  &#125;</span><br><span class="line"></span><br><span class="line"> &lt;Button auth=<span class="string">"user/addUser"</span>&gt;添加用户&lt;/Button&gt;</span><br><span class="line"> &lt;Input auth=<span class="string">"user/search"</span> visible=&#123;<span class="literal">false</span>&#125; &gt;添加用户&lt;/Input&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="双向绑定"><a href="#双向绑定" class="headerlink" title="双向绑定"></a>双向绑定</h3><p>在 <code>vue</code> 中，绑定一个变量后可实现双向数据绑定，即表单中的值改变后绑定的变量也会自动改变。而 <code>React</code> 中没有做这样的处理，在默认情况下，表单元素都是<strong>非受控组件</strong>。给表单元素绑定一个状态后，往往需要手动书写 <code>onChange</code> 方法来将其改写为<strong>受控组件</strong>，在表单元素非常多的情况下这些重复操作是非常痛苦的。<br>我们可以借助高阶组件来实现一个简单的双向绑定，代码略长，可以结合下面的思维导图进行理解。<br><img src="https://github.com/fyuanfen/note/raw/master/images/react/hoc2.png" alt="hoc双向绑定"></p>
+<p>首先我们自定义一个 <code>Form</code> 组件，该组件用于包裹所有需要包裹的表单组件，通过 <code>context</code> 向子组件暴露两个属性：</p>
+<ul>
+<li><code>model</code>：当前 <code>Form</code> 管控的所有数据，由表单 <code>name</code> 和 <code>value</code> 组成，如<code>{name:&#39;ConardLi&#39;,pwd:&#39;123&#39;}</code>。<code>model</code> 可由外部传入，也可自行管控。</li>
+<li><code>changeModel</code>：改变 <code>model</code> 中某个 <code>name</code> 的值。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">class Form extends Component &#123;</span><br><span class="line">  static childContextTypes = &#123;</span><br><span class="line">    model: PropTypes.object,</span><br><span class="line">    changeModel: PropTypes.func</span><br><span class="line">  &#125;;</span><br><span class="line">  constructor(props, context) &#123;</span><br><span class="line">    super(props, context);</span><br><span class="line">    this.state = &#123;</span><br><span class="line">      model: props.model || &#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  componentWillReceiveProps(nextProps) &#123;</span><br><span class="line">    <span class="keyword">if</span> (nextProps.model) &#123;</span><br><span class="line">      this.setState(&#123;</span><br><span class="line">        model: nextProps.model</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  changeModel = (name, value) =&gt; &#123;</span><br><span class="line">    this.setState(&#123;</span><br><span class="line">      model: &#123; ...this.state.model, [name]: value &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="function"><span class="title">getChildContext</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> &#123;</span><br><span class="line">      changeModel: this.changeModel,</span><br><span class="line">      model: this.props.model || this.state.model</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  onSubmit = () =&gt; &#123;</span><br><span class="line">    console.log(this.state.model);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &#123;this.props.children&#125;</span><br><span class="line">        &lt;button onClick=&#123;this.onSubmit&#125;&gt;提交&lt;/button&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面定义用于双向绑定的 <code>HOC</code>，其代理了表单的 <code>onChange</code> 属性和 <code>value</code> 属性：</p>
+<p>发生 <code>onChange</code> 事件时调用上层 <code>Form</code> 的 <code>changeModel</code> 方法来改变 <code>context</code> 中的 <code>model</code>。<br>在渲染时将 <code>value</code> 改为从 <code>context</code> 中取出的值。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> proxyHoc(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends Component &#123;</span><br><span class="line">    static contextTypes = &#123;</span><br><span class="line">      model: PropTypes.object,</span><br><span class="line">      changeModel: PropTypes.func</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    onChange = event =&gt; &#123;</span><br><span class="line">      const &#123; changeModel &#125; = this.context;</span><br><span class="line">      const &#123; onChange &#125; = this.props;</span><br><span class="line">      const &#123; v_model &#125; = this.props;</span><br><span class="line">      changeModel(v_model, event.target.value);</span><br><span class="line">      <span class="keyword">if</span> (typeof onChange === <span class="string">"function"</span>) &#123;</span><br><span class="line">        onChange(event);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      const &#123; model &#125; = this.context;</span><br><span class="line">      const &#123; v_model &#125; = this.props;</span><br><span class="line">      <span class="built_in">return</span> (</span><br><span class="line">        &lt;WrappedComponent</span><br><span class="line">          &#123;...this.props&#125;</span><br><span class="line">          value=&#123;model[v_model]&#125;</span><br><span class="line">          onChange=&#123;this.onChange&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line">@proxyHoc</span><br><span class="line">class Input extends Component &#123;</span><br><span class="line">  <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> &lt;input &#123;...this.props&#125; /&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码只是简略的一部分，除了 input，我们还可以将 HOC 应用在 select 等其他表单组件，甚至还可以将上面的 HOC 兼容到 span、table 等展示组件，这样做可以大大简化代码，让我们省去了很多状态管理的工作，使用如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> default class extends Component &#123;</span><br><span class="line">  <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> (</span><br><span class="line">      &lt;Form&gt;</span><br><span class="line">        &lt;Input v_model=<span class="string">"name"</span> /&gt;</span><br><span class="line">        &lt;Input v_model=<span class="string">"pwd"</span> /&gt;</span><br><span class="line">      &lt;/Form&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="表单校验"><a href="#表单校验" class="headerlink" title="表单校验"></a>表单校验</h3><p>基于上面的双向绑定的例子，我们再来一个表单验证器，表单验证器可以包含验证函数以及提示信息，当验证不通过时，展示错误信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> validateHoc(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends Component &#123;</span><br><span class="line">    constructor(props) &#123;</span><br><span class="line">      super(props);</span><br><span class="line">      this.state = &#123; error: <span class="string">""</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    onChange = event =&gt; &#123;</span><br><span class="line">      const &#123; validator &#125; = this.props;</span><br><span class="line">      <span class="keyword">if</span> (validator &amp;&amp; typeof validator.func === <span class="string">"function"</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!validator.func(event.target.value)) &#123;</span><br><span class="line">          this.setState(&#123; error: validator.msg &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          this.setState(&#123; error: <span class="string">""</span> &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      <span class="built_in">return</span> (</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &lt;WrappedComponent onChange=&#123;this.onChange&#125; &#123;...this.props&#125; /&gt;</span><br><span class="line">          &lt;div&gt;&#123;this.state.error || <span class="string">""</span>&#125;&lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> const validatorName = &#123;</span><br><span class="line">func: (val) =&gt; val &amp;&amp; !isNaN(val),</span><br><span class="line">msg: <span class="string">'请输入数字'</span></span><br><span class="line">&#125;</span><br><span class="line">const validatorPwd = &#123;</span><br><span class="line">func: (val) =&gt; val &amp;&amp; val.length &gt; 6,</span><br><span class="line">msg: <span class="string">'密码必须大于 6 位'</span></span><br><span class="line">&#125;</span><br><span class="line">&lt;HOCInput validator=&#123;validatorName&#125; v_model=<span class="string">"name"</span>&gt;&lt;/HOCInput&gt;</span><br><span class="line">&lt;HOCInput validator=&#123;validatorPwd&#125; v_model=<span class="string">"pwd"</span>&gt;&lt;/HOCInput&gt;</span><br></pre></td></tr></table></figure>
+<p>当然，还可以在 <code>Form</code> 提交的时候判断所有验证器是否通过，验证器也可以设置为数组等等，由于文章篇幅原因，代码被简化了很多，有兴趣的同学可以自己实现。</p>
+<h2 id="使用-HOC-的注意事项"><a href="#使用-HOC-的注意事项" class="headerlink" title="使用 HOC 的注意事项"></a>使用 HOC 的注意事项</h2><h3 id="告诫—静态属性拷贝"><a href="#告诫—静态属性拷贝" class="headerlink" title="告诫—静态属性拷贝"></a>告诫—静态属性拷贝</h3><p>当我们应用 <code>HOC</code> 去增强另一个组件时，我们实际使用的组件已经不是原组件了，所以我们拿不到原组件的任何静态属性，我们可以在 HOC 的结尾手动拷贝他们：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> proxyHOC(WrappedComponent) &#123;</span><br><span class="line">  class HOCComponent extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      <span class="built_in">return</span> &lt;WrappedComponent &#123;...this.props&#125; /&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  HOCComponent.staticMethod = WrappedComponent.staticMethod;</span><br><span class="line">  // ...</span><br><span class="line">  <span class="built_in">return</span> HOCComponent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果原组件有非常多的静态属性，这个过程是非常痛苦的，而且你需要去了解需要增强的所有组件的静态属性是什么，我们可以使用 <a href="https://github.com/mridgway/hoist-non-react-statics" target="_blank" rel="noopener">hoist-non-react-statics</a> 来帮助我们解决这个问题，它可以自动帮我们拷贝所有非 <code>React</code> 的静态方法，使用方式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import hoistNonReactStatic from <span class="string">"hoist-non-react-statics"</span>;</span><br><span class="line"><span class="keyword">function</span> proxyHOC(WrappedComponent) &#123;</span><br><span class="line">  class HOCComponent extends Component &#123;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      <span class="built_in">return</span> &lt;WrappedComponent &#123;...this.props&#125; /&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  hoistNonReactStatic(HOCComponent, WrappedComponent);</span><br><span class="line">  <span class="built_in">return</span> HOCComponent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="告诫—传递-refs"><a href="#告诫—传递-refs" class="headerlink" title="告诫—传递 refs"></a>告诫—传递 refs</h3><p>使用高阶组件后，获取到的 ref 实际上是最外层的容器组件，而非原组件，但是很多情况下我们需要用到原组件的 ref。<br>高阶组件并不能像透传 props 那样将 refs 透传，我们可以用一个回调函数来完成 ref 的传递：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> hoc(WrappedComponent) &#123;</span><br><span class="line">  <span class="built_in">return</span> class extends Component &#123;</span><br><span class="line">    getWrappedRef = () =&gt; this.wrappedRef;</span><br><span class="line">    <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">      <span class="built_in">return</span> (</span><br><span class="line">        &lt;WrappedComponent</span><br><span class="line">          ref=&#123;ref =&gt; &#123;</span><br><span class="line">            this.wrappedRef = ref;</span><br><span class="line">          &#125;&#125;</span><br><span class="line">          &#123;...this.props&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line">@hoc</span><br><span class="line">class Input extends Component &#123;</span><br><span class="line">  <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> &lt;input /&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class App extends Component &#123;</span><br><span class="line">  <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> (</span><br><span class="line">      &lt;Input</span><br><span class="line">        ref=&#123;ref =&gt; &#123;</span><br><span class="line">          this.inpitRef = ref.getWrappedRef();</span><br><span class="line">        &#125;&#125;</span><br><span class="line">      /&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>React 16.3 版本提供了一个 <code>forwardRef</code> API 来帮助我们进行 refs 传递，这样我们在高阶组件上获取的 ref 就是原组件的 ref 了，而不需要再手动传递，如果你的 React 版本大于 16.3，可以使用下面的方式:</p>
+<h1 id="参考文档："><a href="#参考文档：" class="headerlink" title="参考文档："></a>参考文档：</h1><p><a href="https://github.com/coolriver/coolriver-site/blob/master/markdown/vue-mixin-hoc.md" target="_blank" rel="noopener">HOC(高阶组件)在 vue 中的应用</a><br><a href="http://hcysun.me/2018/01/05/%E6%8E%A2%E7%B4%A2Vue%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6/" target="_blank" rel="noopener">探索 Vue 高阶组件</a><br><a href="https://juejin.im/post/5cad39b3f265da03502b1c0a" target="_blank" rel="noopener">React 深入从 Mixin 到 HOC 再到 Hook</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React的API/" rel="tag"># React的API</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/05/win10的虚拟机安装mac/" rel="next" title="win10的虚拟机安装mac">
+                <i class="fa fa-chevron-left"></i> win10的虚拟机安装mac
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/06/Win10和MAC系统通过VMware共享文件夹/" rel="prev" title="Win10和MAC系统通过VMware共享文件夹">
+                Win10和MAC系统通过VMware共享文件夹 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/05/06/React的HOC/" data-title="Win10和MAC系统通过VMware共享文件夹" data-url="https://MemoryNoodles.github.io/blog/2019/05/06/React的HOC/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/lyp.jpg" alt="老李">
+          <p class="site-author-name" itemprop="name">老李</p>
+          <p class="site-description motion-element" itemprop="description">前端,李永平,博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#高阶组件-HOC"><span class="nav-number">1.</span> <span class="nav-text">高阶组件(HOC)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现方式"><span class="nav-number">1.1.</span> <span class="nav-text">实现方式:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#属性代理-Props-Proxy"><span class="nav-number">1.1.1.</span> <span class="nav-text">属性代理(Props Proxy)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向继承-Inheritance-Inversion"><span class="nav-number">1.1.2.</span> <span class="nav-text">反向继承(Inheritance Inversion)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HOC-可以实现什么功能"><span class="nav-number">1.2.</span> <span class="nav-text">HOC 可以实现什么功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#组合渲染"><span class="nav-number">1.2.1.</span> <span class="nav-text">组合渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件渲染"><span class="nav-number">1.2.2.</span> <span class="nav-text">条件渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作-props"><span class="nav-number">1.2.3.</span> <span class="nav-text">操作 props</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取-refs"><span class="nav-number">1.2.4.</span> <span class="nav-text">获取 refs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态管理"><span class="nav-number">1.2.5.</span> <span class="nav-text">状态管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作-state"><span class="nav-number">1.2.6.</span> <span class="nav-text">操作 state</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染劫持"><span class="nav-number">1.2.7.</span> <span class="nav-text">渲染劫持</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用-HOC"><span class="nav-number">1.3.</span> <span class="nav-text">如何使用 HOC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#compose"><span class="nav-number">1.3.1.</span> <span class="nav-text">compose</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decorators"><span class="nav-number">1.3.2.</span> <span class="nav-text">Decorators</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HOC-的实际应用"><span class="nav-number">1.4.</span> <span class="nav-text">HOC 的实际应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#日志打点"><span class="nav-number">1.4.1.</span> <span class="nav-text">日志打点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可用、权限控制"><span class="nav-number">1.4.2.</span> <span class="nav-text">可用、权限控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双向绑定"><span class="nav-number">1.4.3.</span> <span class="nav-text">双向绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表单校验"><span class="nav-number">1.4.4.</span> <span class="nav-text">表单校验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-HOC-的注意事项"><span class="nav-number">1.5.</span> <span class="nav-text">使用 HOC 的注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#告诫—静态属性拷贝"><span class="nav-number">1.5.1.</span> <span class="nav-text">告诫—静态属性拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#告诫—传递-refs"><span class="nav-number">1.5.2.</span> <span class="nav-text">告诫—传递 refs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档："><span class="nav-number">2.</span> <span class="nav-text">参考文档：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">老李</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"baibatian"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
